@@ -1,11 +1,11 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const team = require('./src/page-template');
+const template = require('./src/page-template');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
-let teamMember = [];
+let team = [];
 
 function mainPrompt() {
     inquirer.prompt([
@@ -13,7 +13,7 @@ function mainPrompt() {
             type: "list",
             message: "Choose to add employee",
             name: "addEmployee",
-            choices: ["Manager", "Engineer", "Intern"]
+            choices: ["Manager", "Engineer", "Intern", "Finish"]
         }])
         .then((res) => {
             console.log(res);
@@ -27,11 +27,12 @@ function mainPrompt() {
                 case "Intern":
                     internPrompt();
                     break;
+                case "Finish":
+                    writeTeamPage(team);
+                    break;
             }
         })
 }
-mainPrompt()
-
 function managerPrompt() {
     inquirer
         .prompt([
@@ -56,11 +57,10 @@ function managerPrompt() {
                 name: "officeNumber"
             }]).then((ans) => {
                 let manager = new Manager(ans.name, ans.id, ans.email, ans.officeNumber)
-                teamMember.push(manager);
-                console.log(teamMember);
+                team.push(manager);
+                mainPrompt();
             });
 }
-
 function engineerPrompt() {
     inquirer
         .prompt([
@@ -85,11 +85,11 @@ function engineerPrompt() {
                 name: "github"
             }]).then((ans) => {
                 let engineer = new Engineer(ans.name, ans.id, ans.email, ans.github)
-                teamMember.push(engineer);
-                console.log(teamMember);
+                team.push(engineer);
+                console.log(team);
+                mainPrompt();
             });
 };
-
 function internPrompt() {
     inquirer
         .prompt([
@@ -115,7 +115,19 @@ function internPrompt() {
             }
         ]).then((ans) => {
             let intern = new Intern(ans.name, ans.id, ans.email, ans.school)
-            teamMember.push(intern);
-            console.log(teamMember);
+            team.push(intern);
+            console.log(team);
+            mainPrompt();
         });
 };
+function writeTeamPage(team) { 
+    const generatePage = template(team);
+    fs.writeFile("./dist/index.html", generatePage,
+    (err) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log("Success!");
+    })
+}
+mainPrompt()
