@@ -12,6 +12,7 @@
 The purpose of this project is to create a team and display it. It gives user option to choose from. They can choose to add "manager", "engineer", or "intern" as their team member. At the end of the application, it will take all the data and create a page displaying all members.   
 ## Installation required: 🛠️
 For this project, inquirer was used to give user prompts. Another package used on this project is jest, which test and make sure all the function and code works.  
+[Video how to run](https://watch.screencastify.com/v/eqsdUintPTcA5KZUbJDS) 
 ## How to use this application:
 This is a very easy to use project. All user need to do is type in information and it will generate everything else for user. 
 ## Contribution:
