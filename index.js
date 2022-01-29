@@ -4,6 +4,7 @@ const template = require('./src/page-template');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const { validate } = require('@babel/types');
 
 let team = [];
 
@@ -44,7 +45,7 @@ function managerPrompt() {
             {
                 type: "input",
                 message: "Team manager's employee id: ",
-                name: "id"
+                name: "id",
             },
             {
                 type: "input",
